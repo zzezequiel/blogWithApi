@@ -90,26 +90,18 @@ let ul = document.createElement('ul');
 
 
 
-    
+//users information
+const usersApi = "http://localhost:3000/users";
 
 
 
 
 
 
-/*     
-fetch(`${apiURL}`)
-.then(res => res.json())
-.then(data => {
-    data.forEach(data => {
-        let bucle = document.createElement('div');
-        bucle.appendChild(
-            document.createTextNode(`${data.title}`)
-        );
-        div.appendChild(bucle);
-    });
-    postCont.appendChild(div);
-})
-     */
+
+
+
+
+
 
 

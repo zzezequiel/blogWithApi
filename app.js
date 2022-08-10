@@ -1,49 +1,118 @@
 const apiURL = "http://localhost:3000/posts";
 const modalBody = document.querySelector(".modal-body")
+const cont = document.getElementById('cont')
 
 
-
-     fetch(`${apiURL}`)
+function postAdd() {
+    let postHTML = ''
+    return fetch(`${apiURL}`)
         .then(res=> res.json())
         .then(data => {
         data.forEach(post => {
-            let divcont = document.createElement('div')
-            //userID
-            /*let users = document.createElement('h3');
-            users.appendChild(
-                document.createTextNode(`${post.userId}`)
-            );
-            divcont.appendChild(users);
+            
+             postHTML = `
 
-            //id
-            let ids = document.createElement('h5');
-            ids.appendChild(
-                document.createTextNode(`${post.id}`)
-            );
-            divcont.appendChild(ids);*/
+             <div  data-bs-target="#exampleModal">
+             <h2>${post.title}</h2>
+             <h5>${post.body}</h5>
+             
+             
+             <div class="d-flex justify-content-between align-items-center align-self-end w-100">
+             <a
+               href="#"
+               class="btn btn-dark"
+               data-bs-toggle="modal"
+               data-bs-target="#modalTemplate"
+               data-id="${post.id}"
+               >Read more</a
+             >
+           
+           <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+             <div class="modal-dialog">
+               <div class="modal-content">
+                 <div class="modal-header">
+                   <h5 class="modal-title" id="exampleModalLabel" >${post.title}</h5>
+                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                 </div>
+                 <div class="modal-body">
+                 ${post.body}
+                 </div>
+                 <div class="modal-footer">
+                 <button id="editPost" class="btn btn-success icon-pencil" data-edit="${post.id}" data-bs-toggle="modal" data-bs-target="#exampleModal2"></button>
+                 <button id="deletePost" class="btn btn-danger icon-bin" data-delete="${post.id}"></button>
+                 </div>
+               </div>
+             </div>
+           </div>
 
-            //title
-
-            let element = document.createElement('h3');
-            element.appendChild(
-                document.createTextNode(`${post.title}`)
-                
-                );
-            divcont.setAttribute("data-bs-toggle","modal")
-            divcont.setAttribute("data-bs-target","#staticBackdrop")
-            divcont.appendChild(element);
-
-            //body
-
-            let content = document.createElement('p');
-            content.appendChild(
-                document.createTextNode(`${post.body}`)
-            );
-            divcont.appendChild(content);
-            main.appendChild(divcont);
-        });
-        
+            `
+            cont.innerHTML += postHTML
+        })     
     }) 
 
+}
 
-const usersApi = "http://localhost:3000/users";
+cont.addEventListener('click', async (e) => {
+    let targetId = e.target.dataset.id
+    let targetDelete = e.target.dataset.delete
+    let targetEdit = e.target.dataset.edit
+  
+    if (targetId) {
+      displayPostModal(targetId)
+    } else if (targetDelete) {
+      deletePost(targetDelete)
+    } else if (targetEdit) {
+      setForm(targetEdit)
+    }
+  })
+
+  async function displayPostModal(targetId) {
+    let post = await fetch(`${apiURL}/${targetId}`).then(response => response.json())
+    let user = await fetch(`${apiURL}/users/${post.userId}`).then(response => response.json())
+    let comments = await fetch(`${apiURL}${targetId}/comments`).then(response => response.json())
+  
+    let modalHTML = `
+    <div class="modal-header align-items-start">
+      <h2 class="modal-title capitalize-text lh-sm" id="modalTitle">${post.title}</h2>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+      ></button>
+    </div>
+    
+    <div id="modalBody" class="modal-body">
+      <p class="capitalize-text">${post.body}</p>
+      <div class="d-flex justify-content-center mx-1 my-2">
+        
+        <div class="d-flex flex-column">
+          <h3 class="pb-3">Author</h3>
+          <p>${user.name}</p>
+          <a href="mailto:${user.email}">${user.email}</a>
+        </div>
+      </div>
+      <div class="accordion accordion-flush" id="loadComments">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="flush-headingOne">
+          <button id="commentsBtn" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+          Show comments
+          </button>
+          </h2>
+          <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#loadComments">
+          <div id="commentsContainer" class="accordion-body"></div>
+        </div>
+      </div>
+    </div>
+    `
+    document.getElementById('myModal').innerHTML = modalHTML
+    document.getElementById('loadComments').addEventListener('click', () => loadComments(comments))
+  }
+  
+ 
+
+
+
+
+
+postAdd()

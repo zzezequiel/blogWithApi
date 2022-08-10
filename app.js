@@ -1,85 +1,159 @@
-const apiURL = "http://localhost:3000/posts";
-const modalBody = document.querySelector(".modal-body")
+var modal = document.getElementById("myModal");
 
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+var userBtn = document.getElementById("userBtn");
+var commentBtn = document.getElementById("commentBtn");
 
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
 
-     fetch(`${apiURL}`)
-        .then(res=> res.json())
-        .then(data => {
-        data.forEach(post => {
-            let divcont = document.createElement('div')
-            //userID
-            /*let users = document.createElement('h3');
-            users.appendChild(
-                document.createTextNode(`${post.userId}`)
-            );
-            divcont.appendChild(users);
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+  modal.style.display = "block";
 
-            //id
-            let ids = document.createElement('h5');
-            ids.appendChild(
-                document.createTextNode(`${post.id}`)
-            );
-            divcont.appendChild(ids);*/
+  const apiURL = "http://localhost:3000/posts";
+  fetch(`${apiURL}`)
+     .then(res=> res.json())
+     .then(data => {
+     data.forEach(post => {
 
-            //title
+        let content = document.getElementById('content');
+           //userID
+          let users = document.createElement('h3');
+           users.appendChild(
+               document.createTextNode(`${post.userId}`)
+           );
+           content.appendChild(users);
+        //ID
+        let ids = document.createElement('h3');
+        ids.appendChild(
+            document.createTextNode(`${post.id}`)
+        );
+        content.appendChild(ids);
 
-            let element = document.createElement('h3');
-            element.appendChild(
-                document.createTextNode(`${post.title}`)
-                
-                );
-            divcont.setAttribute("data-bs-toggle","modal")
-            divcont.setAttribute("data-bs-target","#staticBackdrop")
-            divcont.appendChild(element);
+        //title
+        let titles = document.createElement('h3');
+        titles.appendChild(
+            document.createTextNode(`${post.title}`)
+        );
+        content.appendChild(titles);
 
-            //body
+        //body
 
-            let content = document.createElement('p');
-            content.appendChild(
-                document.createTextNode(`${post.body}`)
-            );
-            divcont.appendChild(content);
-            main.appendChild(divcont);
-        });
-        
-    }) 
+        let bodys = document.createElement('h3');
+        bodys.appendChild(
+            document.createTextNode(`${post.body}`)
+        );
+        content.appendChild(bodys);
 
+     })
+    })
 
+}
 
+userBtn.onclick = function() {
+    modal.style.display = "block";
 
-//users information
-const usersApi = "http://localhost:3000/users";
-fetch(`${usersApi}`)
+const userUrl = "http://localhost:3000/users";
+fetch(`${userUrl}`)
 .then(res => res.json())
 .then(data => {
-    data.forEach(usernames => {
-        let container = document.createElement('div')
+    data.forEach(users => {
+        let contentUsers = document.getElementById('contentUsers');
 
-        let element = document.createElement('h3');
-        element.appendChild(
-            document.createTextNode(`${usernames.id}`)
+        //ids
+        let user = document.createElement('h3');
+        user.appendChild(
+            document.createTextNode(`${users.id}`)
         );
-        container.setAttribute("data-bs-toggle","modal")
-        container.setAttribute("data-bs-target","#staticBackdrop")
-        container.appendChild(element);
+        contentUsers.appendChild(user);
 
-        let names = document.createElement('p');
+        //username
+        let names = document.createElement('h3');
         names.appendChild(
-            document.createTextNode(`${usernames.username}`)
+            document.createTextNode(`${users.username}`)
         );
-        container.appendChild(names);
-        main.appendChild(container);
+        contentUsers.appendChild(names);
+
+        //email
+        let emails = document.createElement('h3');
+        emails.appendChild(
+            document.createTextNode(`${users.email}`)
+        );
+        contentUsers.appendChild(emails);
+
+
     })
 })
 
+}
+
+commentBtn.onclick = function() {
+    modal.style.display = "block";
+
+    const commentsUrl = "http://localhost:3000/comments";
+    fetch(`${commentsUrl}`)
+    .then(res => res.json())
+    .then(data => {
+        data.forEach(comments => {
+
+            let coments = document.getElementById('contentComents');
+
+            //postId
+            let postid = document.createElement('h3');
+            postid.appendChild(
+                document.createTextNode(`${comments.postId}`)
+            );
+            coments.appendChild(postid);
+
+            //id
+            let iDs =document.createElement('h3');
+            iDs.appendChild(
+                document.createTextNode(`${comments.id}`)
+            );
+            coments.appendChild(iDs);
+
+            //name
+                let naMes = document.createElement('h3');
+                naMes.appendChild(
+                    document.createTextNode(`${comments.name}`)
+                );
+                coments.appendChild(naMes);
+
+            //email
+            let Email = document.createElement('h3');
+            Email.appendChild(
+                document.createTextNode(`${comments.email}`)
+            );
+            coments.appendChild(Email);
+            
+            //body
+            let Bodys = document.createElement('h3');
+            Bodys.appendChild(
+                document.createTextNode(`${comments.body}`)
+            );
+            coments.appendChild(Bodys);
+        })
+    })
+
+}
 
 
 
 
 
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
 
-
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
 
 
 

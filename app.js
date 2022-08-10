@@ -1,97 +1,79 @@
 const apiURL = "http://localhost:3000/posts";
-let main = document.getElementById('main');
-let postCont = document.getElementById('postCont');
-let ul = document.createElement('ul');
-
-
-
-
-/* const section = `
-<div class="accordion" id="accordionExample">
-    <div class="accordion-item">
-            <h2 class="accordion-header" id="headingOne">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    Accordion Item #1
-                </button>
-            </h2>
-            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                <div id="postCont" class="accordion-body">
-     
-                </div>
-            </div>
-    </div>
-</div>`; */
-
-
-
-
-      /*   fetch(`${apiURL}`)
-        .then(res=> res.json())
-        .then(data => {
-        data.forEach(data => {
-            let element = document.createElement('h3');
-            element.appendChild(
-                document.createTextNode(`${data.title}`)
-                );
-            ul.appendChild(element);
-
-            let users = document.createElement('h3');
-            users.appendChild(
-                document.createTextNode(`${data.body}`)
-            );
-            ul.appendChild(users);
-        });
-        postCont.appendChild(ul);
-    })  */
-
-
-
-
+const modalBody = document.querySelector(".modal-body")
 
 
 
      fetch(`${apiURL}`)
         .then(res=> res.json())
         .then(data => {
-        data.forEach(data => {
-
+        data.forEach(post => {
+            let divcont = document.createElement('div')
             //userID
-            let users = document.createElement('h5');
+            /*let users = document.createElement('h3');
             users.appendChild(
-                document.createTextNode(`${data.userId}`)
+                document.createTextNode(`${post.userId}`)
             );
-            ul.appendChild(users);
+            divcont.appendChild(users);
 
             //id
             let ids = document.createElement('h5');
             ids.appendChild(
-                document.createTextNode(`${data.id}`)
+                document.createTextNode(`${post.id}`)
             );
-            ul.appendChild(ids);
+            divcont.appendChild(ids);*/
 
             //title
 
             let element = document.createElement('h3');
             element.appendChild(
-                document.createTextNode(`${data.title}`)
+                document.createTextNode(`${post.title}`)
+                
                 );
-            ul.appendChild(element);
+            divcont.setAttribute("data-bs-toggle","modal")
+            divcont.setAttribute("data-bs-target","#staticBackdrop")
+            divcont.appendChild(element);
 
             //body
 
-            let content = document.createElement('h3');
+            let content = document.createElement('p');
             content.appendChild(
-                document.createTextNode(`${data.body}`)
+                document.createTextNode(`${post.body}`)
             );
-            ul.appendChild(content);
+            divcont.appendChild(content);
+            main.appendChild(divcont);
         });
-        postCont.appendChild(ul);
+        
     }) 
+
 
 
 
 //users information
 const usersApi = "http://localhost:3000/users";
+fetch(`${usersApi}`)
+.then(res => res.json())
+.then(data => {
+    data.forEach(usernames => {
+        let container = document.createElement('div')
+
+        let element = document.createElement('h3');
+        element.appendChild(
+            document.createTextNode(`${usernames.id}`)
+        );
+        container.setAttribute("data-bs-toggle","modal")
+        container.setAttribute("data-bs-target","#staticBackdrop")
+        container.appendChild(element);
+
+        let names = document.createElement('p');
+        names.appendChild(
+            document.createTextNode(`${usernames.username}`)
+        );
+        container.appendChild(names);
+        main.appendChild(container);
+    })
+})
+
+
 
 
 

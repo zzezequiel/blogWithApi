@@ -15,7 +15,7 @@ function postAdd() {
             
              postHTML = `
 
-             <div  data-bs-target="#exampleModal" class="container-sm  col-3 shadow p-3 mb-5 bg-body rounded">
+             <div  data-bs-target="#exampleModal" class="col-5 ms-4 shadow p-3 mb-5 bg-body rounded">
              <h2>${post.title}</h2>
              <h5>${post.body}</h5>
              
@@ -57,6 +57,7 @@ function postAdd() {
 
 cont.addEventListener('click', async (e) => {
     let targetId = e.target.dataset.id
+    
   
   
     if (targetId) {
@@ -75,7 +76,7 @@ cont.addEventListener('click', async (e) => {
    
     let comments = await fetch(`${apiURL}${targetId}/comments`).then(response => response.json())
 
-    let user = await fetch(`${apiURL}/users/${post.userId}`).then(response => response.json())
+    let user = await fetch(`${apiURL}/${post.userId}`).then(response => response.json())
     
 
   

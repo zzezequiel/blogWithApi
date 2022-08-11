@@ -72,7 +72,7 @@ cont.addEventListener('click', async (e) => {
   async function displayPostModal(targetId) {
     let post = await fetch(`${apiURL}/${targetId}`).then(response => response.json())
 
-    let users = await fetch(`${userURL}/${users.userId}`).then(response => response.json())
+   
     let comments = await fetch(`${apiURL}${targetId}/comments`).then(response => response.json())
 
     let user = await fetch(`${apiURL}/users/${post.userId}`).then(response => response.json())
@@ -91,14 +91,12 @@ cont.addEventListener('click', async (e) => {
     </div>
     
     <div id="modalBody" class="modal-body">
-      <p class="capitalize-text">${user.userId}</p>
+      <p class="capitalize-text">${post.body}</p>
       <div class="d-flex justify-content-center mx-1 my-2">
         
         <div class="d-flex flex-column">
 
-          <h3 class="pb-3">Author</h3>
-          <p>${user.username}</p>
-          <a href="mailto:${user.email}">${user.email}</a>
+         
 
           <h3 class="pb-3">autor</h3>
           <p>${user.name}</p>

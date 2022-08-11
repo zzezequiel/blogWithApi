@@ -1,7 +1,12 @@
 const apiURL = "http://localhost:3000/posts";
+const userURL = " http://localhost:3000/users";
+const commentsURL = "http://localhost:3000/comments";
 const modalBody = document.querySelector(".modal-body")
 const cont = document.getElementById('cont')
 
+
+
+//posts
 
 function postAdd() {
     let postHTML = ''
@@ -58,14 +63,15 @@ cont.addEventListener('click', async (e) => {
   
     if (targetId) {
       displayPostModal(targetId)
-    } else {
-        alert("post error")
     }
 })
 
+//users
+
+
   async function displayPostModal(targetId) {
     let post = await fetch(`${apiURL}/${targetId}`).then(response => response.json())
-    let user = await fetch(`${apiURL}/users/${post.userId}`).then(response => response.json())
+    let user = await fetch(`${userURL}/${user.userId}`).then(response => response.json())
     let comments = await fetch(`${apiURL}${targetId}/comments`).then(response => response.json())
   
     let modalHTML = `
@@ -80,12 +86,12 @@ cont.addEventListener('click', async (e) => {
     </div>
     
     <div id="modalBody" class="modal-body">
-      <p class="capitalize-text">${post.body}</p>
+      <p class="capitalize-text">${user.userId}</p>
       <div class="d-flex justify-content-center mx-1 my-2">
         
         <div class="d-flex flex-column">
           <h3 class="pb-3">Author</h3>
-          <p>${user.name}</p>
+          <p>${user.username}</p>
           <a href="mailto:${user.email}">${user.email}</a>
         </div>
       </div>

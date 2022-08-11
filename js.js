@@ -5,9 +5,7 @@ const modalBody = document.querySelector(".modal-body")
 const cont = document.getElementById('cont')
 
 
-
 //posts
-
 function postAdd() {
     let postHTML = ''
     return fetch(`${apiURL}`)
@@ -17,7 +15,7 @@ function postAdd() {
             
              postHTML = `
 
-             <div  data-bs-target="#exampleModal">
+             <div  data-bs-target="#exampleModal" class="container-sm  col-3 shadow p-3 mb-5 bg-body rounded">
              <h2>${post.title}</h2>
              <h5>${post.body}</h5>
              
@@ -63,16 +61,23 @@ cont.addEventListener('click', async (e) => {
   
     if (targetId) {
       displayPostModal(targetId)
-    }
-})
 
-//users
+    }
+
+    })
+
+
 
 
   async function displayPostModal(targetId) {
     let post = await fetch(`${apiURL}/${targetId}`).then(response => response.json())
-    let user = await fetch(`${userURL}/${user.userId}`).then(response => response.json())
+
+    let users = await fetch(`${userURL}/${users.userId}`).then(response => response.json())
     let comments = await fetch(`${apiURL}${targetId}/comments`).then(response => response.json())
+
+    let user = await fetch(`${apiURL}/users/${post.userId}`).then(response => response.json())
+    
+
   
     let modalHTML = `
     <div class="modal-header align-items-start">
@@ -90,9 +95,15 @@ cont.addEventListener('click', async (e) => {
       <div class="d-flex justify-content-center mx-1 my-2">
         
         <div class="d-flex flex-column">
+
           <h3 class="pb-3">Author</h3>
           <p>${user.username}</p>
           <a href="mailto:${user.email}">${user.email}</a>
+
+          <h3 class="pb-3">autor</h3>
+          <p>${user.name}</p>
+          <a href="mailto:${user.email}"></a>
+
         </div>
       </div>
       <div class="accordion accordion-flush" id="loadComments">
@@ -113,9 +124,5 @@ cont.addEventListener('click', async (e) => {
   }
   
  
-
-
-
-
 
 postAdd()

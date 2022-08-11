@@ -54,16 +54,14 @@ function postAdd() {
 
 cont.addEventListener('click', async (e) => {
     let targetId = e.target.dataset.id
-    
+  
   
     if (targetId) {
       displayPostModal(targetId)
-    } else if (targetDelete) {
-      deletePost(targetDelete)
-    } else if (targetEdit) {
-      setForm(targetEdit)
+    } else {
+        alert("post error")
     }
-  })
+})
 
   async function displayPostModal(targetId) {
     let post = await fetch(`${apiURL}/${targetId}`).then(response => response.json())

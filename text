@@ -54,7 +54,8 @@ function postAdd() {
 
 cont.addEventListener('click', async (e) => {
     let targetId = e.target.dataset.id
-    
+    let targetDelete = e.target.dataset.delete
+    let targetEdit = e.target.dataset.edit
   
     if (targetId) {
       displayPostModal(targetId)

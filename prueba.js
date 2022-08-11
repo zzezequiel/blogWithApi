@@ -16,7 +16,7 @@ async function postAdd() {
 
     postHTML = `
 
-             <div  data-bs-target="#exampleModal">
+             <div  data-bs-target="#exampleModal" class="col-5 ms-4 shadow p-3 mb-5 bg-body rounded">
              <h2>${post.title}</h2>
              <h5>${post.body}</h5>
              

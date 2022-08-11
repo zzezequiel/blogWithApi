@@ -1,16 +1,20 @@
 const apiURL = "http://localhost:3000/posts";
+const userURL = " http://localhost:3000/users";
+const commentsURL = "http://localhost:3000/comments";
 const modalBody = document.querySelector(".modal-body")
 const cont = document.getElementById('cont')
 
 
-function postAdd() {
+
+//posts
+
+async function postAdd() {
     let postHTML = ''
-    return fetch(`${apiURL}`)
-        .then(res=> res.json())
-        .then(data => {
-        data.forEach(post => {
-            
-             postHTML = `
+    const res = await fetch(`${apiURL}`);
+  const data = await res.json();
+  data.forEach(post => {
+
+    postHTML = `
 
              <div  data-bs-target="#exampleModal">
              <h2>${post.title}</h2>
@@ -45,30 +49,28 @@ function postAdd() {
              </div>
            </div>
 
-            `
-            cont.innerHTML += postHTML
-        })     
-    }) 
+            `;
+    cont.innerHTML += postHTML;
+  }); 
 
 }
 
 cont.addEventListener('click', async (e) => {
     let targetId = e.target.dataset.id
-    
+  
   
     if (targetId) {
       displayPostModal(targetId)
-    } else if (targetDelete) {
-      deletePost(targetDelete)
-    } else if (targetEdit) {
-      setForm(targetEdit)
     }
-  })
+})
+
+
+
 
   async function displayPostModal(targetId) {
     let post = await fetch(`${apiURL}/${targetId}`).then(response => response.json())
-    let user = await fetch(`${apiURL}/users/${post.userId}`).then(response => response.json())
-    let comments = await fetch(`${apiURL}${targetId}/comments`).then(response => response.json())
+    let user = await fetch(`${userURL}/${targetId}`).then(response => response.json())
+    let comments = await fetch(`${commentsURL}/${targetId}`).then(response => response.json())
   
     let modalHTML = `
     <div class="modal-header align-items-start">
@@ -99,7 +101,18 @@ cont.addEventListener('click', async (e) => {
           </button>
           </h2>
           <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#loadComments">
-          <div id="commentsContainer" class="accordion-body"></div>
+          <div id="commentsContainer" class="accordion-body">
+          
+          <p>${comments.postId}</p>
+          <p>${comments.id}</p>
+          <p>${comments.name}</p>
+          <p>${comments.email}</p>
+          <p>${comments.body}</p>
+        
+         
+          </div>
+
+       
         </div>
       </div>
     </div>
@@ -109,7 +122,6 @@ cont.addEventListener('click', async (e) => {
   }
   
  
-
 
 
 

@@ -6,6 +6,7 @@ const cont = document.getElementById('cont')
 
 
 
+<<<<<<< HEAD
 //posts
 
 async function postAdd() {
@@ -17,6 +18,9 @@ async function postAdd() {
     postHTML = `
 
              <div  data-bs-target="#exampleModal">
+=======
+             <div  data-bs-target="#exampleModal" class="col-5 ms-4 shadow p-3 mb-5 bg-body rounded">
+>>>>>>> 5620cee01baf2847c33c3d7b666c9e56d65817bb
              <h2>${post.title}</h2>
              <h5>${post.body}</h5>
              
@@ -57,6 +61,7 @@ async function postAdd() {
 
 cont.addEventListener('click', async (e) => {
     let targetId = e.target.dataset.id
+    
   
   
     if (targetId) {
@@ -71,6 +76,13 @@ cont.addEventListener('click', async (e) => {
     let post = await fetch(`${apiURL}/${targetId}`).then(response => response.json())
     let user = await fetch(`${apiURL}/${post.userId}`).then(response => response.json())
     let comments = await fetch(`${apiURL}${targetId}/comments`).then(response => response.json())
+<<<<<<< HEAD
+=======
+
+    let user = await fetch(`${apiURL}/${post.userId}`).then(response => response.json())
+    
+
+>>>>>>> 5620cee01baf2847c33c3d7b666c9e56d65817bb
   
     let modalHTML = `
     <div class="modal-header align-items-start">

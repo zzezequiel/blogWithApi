@@ -6,7 +6,6 @@ const cont = document.getElementById('cont')
 
 
 
-
 //posts
 
 async function postAdd() {
@@ -18,9 +17,6 @@ async function postAdd() {
     postHTML = `
 
              <div  data-bs-target="#exampleModal">
-
-             <div  data-bs-target="#exampleModal" class="col-5 ms-4 shadow p-3 mb-5 bg-body rounded">
-
              <h2>${post.title}</h2>
              <h5>${post.body}</h5>
              
@@ -61,7 +57,6 @@ async function postAdd() {
 
 cont.addEventListener('click', async (e) => {
     let targetId = e.target.dataset.id
-    
   
   
     if (targetId) {
@@ -74,16 +69,8 @@ cont.addEventListener('click', async (e) => {
 
   async function displayPostModal(targetId) {
     let post = await fetch(`${apiURL}/${targetId}`).then(response => response.json())
-
-    let user = await fetch(`${apiURL}/${post.userId}`).then(response => response.json())
-
-    let comments = await fetch(`${apiURL}${targetId}/comments`).then(response => response.json())
-
-
-    let user = await fetch(`${apiURL}/${targetId}`).then(response => response.json())
-    
-
-
+    let user = await fetch(`${userURL}/${targetId}`).then(response => response.json())
+    let comments = await fetch(`${commentsURL}/${targetId}`).then(response => response.json())
   
     let modalHTML = `
     <div class="modal-header align-items-start">
@@ -114,7 +101,18 @@ cont.addEventListener('click', async (e) => {
           </button>
           </h2>
           <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#loadComments">
-          <div id="commentsContainer" class="accordion-body"></div>
+          <div id="commentsContainer" class="accordion-body">
+          
+          <p>${comments.postId}</p>
+          <p>${comments.id}</p>
+          <p>${comments.name}</p>
+          <p>${comments.email}</p>
+          <p>${comments.body}</p>
+        
+         
+          </div>
+
+       
         </div>
       </div>
     </div>
@@ -124,7 +122,6 @@ cont.addEventListener('click', async (e) => {
   }
   
  
-
 
 
 

@@ -30,27 +30,9 @@ async function postAdd() {
                data-id="${post.id}"
                >Read more</a
              >
-           
-           <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-             <div class="modal-dialog">
-               <div class="modal-content">
-                 <div class="modal-header">
-                   <h5 class="modal-title" id="exampleModalLabel" >${post.title}</h5>
-                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                 </div>
-                 <div class="modal-body">
-                 ${post.body}
-                 </div>
-                 <div class="modal-footer">
-                 <button id="editPost" class="btn btn-success icon-pencil" data-edit="${post.id}" data-bs-toggle="modal" data-bs-target="#exampleModal2"></button>
-                 <button id="deletePost" class="btn btn-danger icon-bin" data-delete="${post.id}"></button>
-                 </div>
-               </div>
-             </div>
-           </div>
-
             `;
     cont.innerHTML += postHTML;
+  
   }); 
 
 }
@@ -103,12 +85,10 @@ cont.addEventListener('click', async (e) => {
           <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#loadComments">
           <div id="commentsContainer" class="accordion-body">
           
-          <p>${comments.postId}</p>
-          <p>${comments.id}</p>
+          
           <p>${comments.name}</p>
-          <p>${comments.email}</p>
           <p>${comments.body}</p>
-        
+          <p>${comments.email}</p>
          
           </div>
 
@@ -127,3 +107,7 @@ cont.addEventListener('click', async (e) => {
 
 
 postAdd()
+
+
+          /*<p>${comments.postId}</p>
+          <p>${comments.id}</p>*/

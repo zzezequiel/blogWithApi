@@ -73,10 +73,9 @@ cont.addEventListener('click', async (e) => {
   async function displayPostModal(targetId) {
     let post = await fetch(`${apiURL}/${targetId}`).then(response => response.json())
 
-   
     let comments = await fetch(`${apiURL}${targetId}/comments`).then(response => response.json())
 
-    let user = await fetch(`${apiURL}/${post.userId}`).then(response => response.json())
+    let user = await fetch(`${apiURL}/${targetId}`).then(response => response.json())
     
 
   

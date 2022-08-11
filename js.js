@@ -5,7 +5,9 @@ const modalBody = document.querySelector(".modal-body")
 const cont = document.getElementById('cont')
 
 
+
 //posts
+
 function postAdd() {
     let postHTML = ''
     return fetch(`${apiURL}`)
@@ -64,17 +66,15 @@ cont.addEventListener('click', async (e) => {
 
     }
 
-    })
+    } )
 
 
 
 
-  async function displayPostModal(targetId) {
+    async function displayPostModal(targetId) {
     let post = await fetch(`${apiURL}/${targetId}`).then(response => response.json())
-
     let users = await fetch(`${userURL}/${users.userId}`).then(response => response.json())
     let comments = await fetch(`${apiURL}${targetId}/comments`).then(response => response.json())
-
     let user = await fetch(`${apiURL}/users/${post.userId}`).then(response => response.json())
     
 
@@ -124,5 +124,9 @@ cont.addEventListener('click', async (e) => {
   }
   
  
+
+
+
+
 
 postAdd()
